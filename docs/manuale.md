@@ -133,7 +133,7 @@ $dbconn = new PDO("sqlite:" . $dbpath);
 $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 ```
 
-## Prototipo pagina di raccolta e insetimento dati
+## Prototipo pagina di raccolta e inserimento dati
 
 ```html
 <!DOCTYPE html>
@@ -145,7 +145,7 @@ $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     <script>
     function controllo () {	
         if (document.getElementById("primo").value=="") {
-            alert (“devi riempire il campo);
+            alert ("devi riempire il campo");
             return false; // controllo campo riempito
         }
         
@@ -164,7 +164,7 @@ $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         Secondo <input type="Text" name="secondo" id="secondo" />
         Terzo <input type="number" name="terzo" id="terzo" />
         Data <input type="date" name="data" id="data" /> …
-        <input type='submit' value=’Conferma’ onclick="return controllo ();" />
+        <input type="submit" value="Conferma" onclick="return controllo ();" />
     </form>
     <?php
     if ($_POST) {	
@@ -247,6 +247,7 @@ $esegui = $comando->execute($riga);
 
 //ottengo il numero di righe inserite dalla query
 $righe_modificate = $comando->rowCount();
+//se ho campo numerazione automatica, ottengo l'ultimo ID generato.
 $id_generato = $dbconn->lastInsertId();
 ```
 
