@@ -1,6 +1,6 @@
 <?php
 
-require_once('include/connessione.php');
+require_once('connessione.php');
 
 
 $str_query = "SELECT * FROM generi ORDER BY genere ASC";
@@ -13,7 +13,7 @@ $comando->execute();
 <head>
     <meta charset="UTF-8" />
     <title>Gestione biblioteca</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="biblio.css" />
 </head>
 <body>
     <div class="main">

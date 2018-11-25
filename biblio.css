@@ -173,3 +173,15 @@ ul.menu-principale>li>ul {
     margin-bottom: 12px;
     list-style-type: disc;
 }
+
+.messaggio-errore {
+    border: 2px solid red;
+    padding: 10px;
+    color: red;
+}
+
+.messaggio-successo {
+    border: 2px solid forestgreen;
+    padding: 10px;
+    color: forestgreen;
+}

@@ -1,6 +1,6 @@
 <?php
 
-require_once (__DIR__ . "/connessione.php");
+require_once ("connessione.php");
 
 /**
  * Ottiene il conteggio dei libri presenti in biblioteca
@@ -167,4 +167,33 @@ function getElencoAutoriLibro($idl) {
 
     return $elenco_autori;
     
+}
+
+/**
+ * Controlla se esiste già un genere con l'ID preso in input.
+ * La funzione restituisce true se esiste già una riga con l'ID, 
+ * false in caso contrario.
+ * 
+ * @return bool
+ */
+function genere_esiste($idg) {
+    global $dbconn;
+
+    $str_query = "SELECT COUNT(*) FROM generi WHERE idg = :idg";
+    $comando = $dbconn->prepare($str_query);
+    $esegui = $comando->execute(['idg' => $idg]);
+
+    if($esegui) {
+        //la query restituisce un solo valore
+        //posso ottenerlo con la funzione fetchColumn
+        $conteggio = $comando->fetchColumn();
+
+        if($conteggio == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }

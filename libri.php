@@ -56,46 +56,40 @@ $esegui = $comando->execute();
 			<fieldset>
 				<legend>Ordina &amp; filtra</legend>
 
-				<table>
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<th>Ordina per:</th>
+							<th>Cerca titolo:</th>
+							<th>Genere:</th>
+							<th>Casa editrice</th>
+							<th></th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr>
-							<td><label>Ordina per:</label></td>
-							<td>
-								<select name="sort">
-									<option value="titolo">Titolo</option>
-									<option value="titolo">Autore/i</option>
-									<option value="num_pag">Numero pagine</option>
-								</select>
-								<select name="sort_dir">
-									<option value="ASC">Crescente</option>
-									<option value="DESC">Decrescente</option>
+							<td style="text-align:center;">
+								<select name="ordina" id="ordina">
+									<option value="titolo ASC">Titolo crescente</option>
+									<option value="titolo DESC">Titolo decrescente</option>
+									<option value="anno_pub ASC">Anno pubb. crescente</option>
+									<option value="anno_pub DESC">Anno pubb. decrescente</option>
 								</select>
 							</td>
-						</tr>
-						<tr>
-							<td colspan="2"><strong>Filtri di selezione</strong></td>
-						</tr>
-						<tr>
-							<td><label>Autore:</label></td>
-							<td>
-								<select name="filtro_autore">
-									<option value="">&dash; tutti gli autori &dash;</option>
-									<?php foreach($autori as $autore) {
-										$ida = $autore['ida'];
-										$nomea = $autore['nomea'];
-										$cognomea = $autore['cognomea'];
-										echo "<option value=\"$ida\">$cognomea, $nomea</option>";
-									} ?>
+							<td style="text-align:center;">
+								<input type="text" name="cerca_titolo" id="cerca_titolo">
+							</td>
+							<td style="text-align:center">
+								<select name="filtro_idg" id="filtro_idg">
+									<option value="">Tutti i generi</option>
 								</select>
 							</td>
-						</tr>
-						<tr>
-							<td><label for="txtFind">Titolo contiene:</label></td>
-							<td><input type="search" name="find" id="txtFind" /><br /><br /></td>
-						</tr>
-						<tr>
-							<td></td>
-							<td><button type="submit">Applica filtri</button></td>
+							<td style="text-align:center">
+							
+							</td>
+							<td style="text-align:center">
+								<button type="submit">Applica filtri</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

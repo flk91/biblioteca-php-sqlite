@@ -65,28 +65,28 @@ Il presente manuale è consultabile durante la seconda prova scritta dell'Esame 
 
 ## Tipi validi in HTML 5
 
-**button**:	Defines a clickable button (mostly used with a JavaScript to activate a script)\
-**checkbox**:	Defines a checkbox\
-**color**:	Defines a color picker\
-**date**	Defines a date control (year, month and day (no time))\
+**button**:	Pulsante cliccabile\
+**checkbox**:	Casella di spunta\
+**color**:	Selettore di colore\
+**date**	Casella inserimento data (senza ora, formato nella lingua dell'utente)\
 **datetime-local**:	Defines a date and time control (year, month, day, hour, minute, second, and fraction of a second (no time zone)\
-**email**:	Defines a field for an e-mail address\
-**file**:	Defines a file-select field and a "Browse..." button (for file uploads)\
-**hidden**:	Defines a hidden input field\
-**image**:	Defines an image as the submit button\
-**month**:	Defines a month and year control (no time zone)\
-**number**:	Defines a field for entering a number\
-**password**:	Defines a password field (characters are masked)\
-**radio**:	Defines a radio button\
+**email**:	Casella inserimento indirizzo e-mail\
+**file**:	Permette di selezionare dal computer un file da caricare\
+**hidden**:	Campo invisibile all'utente\
+**image**:	Permette di inserire un'immagine che si comporta come un pulsante\
+**month**:	Controllo mese e anno (senza fuso orario)\
+**number**:	Campo per l'inserimento di un numero\
+**password**:	Campo password (i caratteri sono mascherati)\
+**radio**:	Pulsante radio (una sola scelta)\
 **range**:	Defines a control for entering a number whose exact value is not important (like a slider control). Default range is from 0 to 100\
 **reset**:	Defines a reset button (resets all form values to default values)\
 **search**:	Defines a text field for entering a search string\
 **submit**:	Defines a submit button\
-**tel**:	Defines a field for entering a telephone number\
-**text**:	Default. Defines a single-line text field (default width is 20 characters)\
-**time**:	Defines a control for entering a time (no time zone)\
-**url**:	Defines a field for entering a URL\
-**week**:	Defines a week and year control (no time zone)
+**tel**:	Casella inserimento numero di telefono\
+**text**:	*Predefinito*. Casella di testo a linea singola\
+**time**:	Casella inserimento ora (senza fuso orario)\
+**url**:	Casella inserimento URL\
+**week**:	Controllo n° settimana e anno (senza fuso orario)
 
 ## Lista a discesa
 
@@ -189,6 +189,101 @@ $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 </html>
 ```
 
+# PHP + SQLite
+
+## Query di selezione
+
+```php
+require_once("connessione.php"); //importo il file con la variabile di connessione
+//...
+$str_query = "SELECT campo1, campo2, campo3 FROM TABELLA"; //1. stringa query
+$comando = $dbconn->prepare($str_query); //2. preparo la query
+$esegui = $comando->execute(); //3. eseguo la query
+//...
+while($riga = $comando->fetch(PDO::FETCH_ASSOC)) {
+    //la variabile $riga contiene la riga corrente.
+    //il ciclo while gira per tutte le righe restituite dalla query
+    echo $riga['campo1'];
+    echo $riga['campo2'];
+    echo $riga['campo3'];
+}
+```
+
+## Query di selezione con parametri
+
+```php
+require_once("connessione.php");
+
+$parametri = [
+    'campo1' => 'valore campo 1'
+]
+
+$str_query = "SELECT campo1, campo2, campo3 FROM TABELLA WHERE campo1 = :campo1"; 
+$comando = $dbconn->prepare($str_query);
+$esegui = $comando->execute($parametri); 
+
+while($riga = $comando->fetch(PDO::FETCH_ASSOC)) {
+    //utilizzo la variabile $riga
+}
+```
+
+## Query di inserimento
+
+```php
+require_once("connessione.php");
+
+$riga = [
+    'campoA' => $_POST['campoA'],
+    'campoB' => $_POST['campoB'],
+    'campoC' => $_POST['campoC'],
+];
+
+$str_query = "INSERT INTO tabella 
+(campoA, campoB, campoC)
+VALUES
+(:campoA, :campoB, :campoC)";
+$comando = $dbconn->prepare($str_query);
+$esegui = $comando->execute($riga); 
+
+//ottengo il numero di righe inserite dalla query
+$righe_modificate = $comando->rowCount();
+$id_generato = $dbconn->lastInsertId();
+```
+
+## Query di modifica
+
+```php
+require_once("connessione.php");
+
+$riga = [
+    'campoA' => $_POST['campoA'],
+    'campoB' => $_POST['campoB'],
+    'campoC' => $_POST['campoC'],
+];
+
+$str_query = "UPDATE tabella 
+SET
+campoA = :campoA, 
+campoB = :campoB, 
+campoC = :campoC";
+$comando = $dbconn->prepare($str_query);
+$esegui = $comando->execute($riga);
+//ottengo il numero di righe modificate dalla query
+$righe_modificate = $comando->rowCount();
+```
+
+## Query di cancellazione
+
+```php
+require_once('connessione.php');
+$id = $_POST['id'];
+
+$str_query = "DELETE FROM tabella WHERE id = :id";
+$comando = $dbconn->prepare($str_query);
+$esegui = $dbconn->execute(['id' => $id]);
+//ottengo il numero di righe cancellate dalla query
+$righe_cancellate = $comando->rowCount();
+```
 
 
 
