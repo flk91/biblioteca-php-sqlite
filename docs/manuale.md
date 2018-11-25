@@ -156,7 +156,7 @@ $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     return true;
     }
-    </script>
+    </script> 
 </head>
 <body>
     <form name="form1" id="form1" action="#" method="post" />
